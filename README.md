@@ -105,7 +105,7 @@ buckets. To obtain these credentials, follow these instructions:
    file would contain the following:  
    AKAIG8RT71SWARPYUFUS:TJ/9SJF+AF3J619FA+FAE83+AF3318SXN/K31JB19J4
 
-General information on configuring neuropythy, including how to setup the HCP
+For eneral information on configuring neuropythy, including how to setup the HCP
 auto-downloading mechanism, see the [neuropythy configuration wiki
 page](https://github.com/noahbenson/neuropythy/wiki/Configuration).
 
