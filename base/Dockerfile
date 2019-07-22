@@ -7,21 +7,21 @@
 #
 
 # Start with the Ubuntu for now
-FROM nben/neuropythy
+FROM nben/neuropythy:latest
 
 # Note the Maintainer.
 MAINTAINER Noah C. Benson <nben@nyu.edu>
 
-
+# Put this large datafile in the docker so that we don't have to worry
+# about distributing it on github or somewhere else...
 USER root
 COPY 100610_HCP7T_ciftis.tar.gz /data/hcp/retinotopy/
 RUN chmod 755 /data/hcp/retinotopy/100610_HCP7T_ciftis.tar.gz \
- && chown jovyan /data /data/hcp /data/hcp/retinotopy \
- && chown jovyan /data/hcp/retinotopy/100610_HCP7T_ciftis.tar.gz
+ && chown $NB_USER /data /data/hcp /data/hcp/retinotopy \
+ && chown $NB_USER /data/hcp/retinotopy/100610_HCP7T_ciftis.tar.gz
 
-USER $NB_USER
-RUN cd /data/hcp/retinotopy \
- && tar zxf ./100610_HCP7T_ciftis.tar.gz && rm ./100610_HCP7T_ciftis.tar.gz \
- && cd 100610 \
- && for fl in `find . -name '*.dtseries.nii'`; do mv $fl .; done
+# hack a fix into the bug in fsspec library:
+RUN cd /opt/conda/lib/python3.7/site-packages/fsspec \
+ && cp spec.py spec.py.bak \
+ && cat spec.py.bak | sed 's/print(lpath, rpath)/#print(lpath, rpath)/' > spec.py
 

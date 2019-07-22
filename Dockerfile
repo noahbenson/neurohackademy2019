@@ -17,8 +17,14 @@ FROM nben/neurohackademy2019-base:latest
 MAINTAINER Noah C. Benson <nben@nyu.edu>
 
 # The neuropythy docker is built on the jupyter/scipy docker image; in that
-# docker, notebooks are run as the user "jovyan":
-USER jovyan
+# docker, notebooks are run as the user "jovyan", saved as NB_USER:
+USER $NB_USER
+
+# Unzip the data files that are bundled in the base docker:
+RUN cd /data/hcp/retinotopy \
+ && tar zxf ./100610_HCP7T_ciftis.tar.gz && rm ./100610_HCP7T_ciftis.tar.gz \
+ && cd 100610 \
+ && for fl in `find . -name '*.dtseries.nii'`; do mv $fl .; done
 
 # Download some stuff from the OSF...
 RUN mkdir -p /data/hcp/retinotopy \
