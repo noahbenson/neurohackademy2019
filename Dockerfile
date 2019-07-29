@@ -7,11 +7,8 @@
 #   (but really, use docker-compose up instead).
 #
 
-# We are starting from the nben/neuropythy docker; however because we also need
-# a bit of data, I went ahead and added those data to the neuropythy docker
-# then saved that docker as neurohackademy2019-base on dockerhub. You can view
-# the dockerfile used to create that docker image in the base/ directory.
-FROM nben/neurohackademy2019-base:latest
+# We are starting from the nben/neuropythy docker
+FROM nben/neuropythy:latest
 
 # Note the Maintainer.
 MAINTAINER Noah C. Benson <nben@nyu.edu>
@@ -19,18 +16,6 @@ MAINTAINER Noah C. Benson <nben@nyu.edu>
 # The neuropythy docker is built on the jupyter/scipy docker image; in that
 # docker, notebooks are run as the user "jovyan", saved as NB_USER:
 USER $NB_USER
-
-# Unzip the data files that are bundled in the base docker:
-RUN cd /data/hcp/retinotopy \
- && tar zxf ./100610_HCP7T_ciftis.tar.gz && rm ./100610_HCP7T_ciftis.tar.gz \
- && cd 100610 \
- && for fl in `find . -name '*.dtseries.nii'`; do mv $fl .; done
-
-# Download some stuff from the OSF...
-RUN mkdir -p /data/hcp/retinotopy \
- && cd /data/hcp/retinotopy \
- && curl -L -o ./apertures.zip https://osf.io/5sj3m/download \
- && unzip apertures.zip
 
 # Install some stuff (popeye)...
 RUN git clone https://github.com/noahbenson/popeye \

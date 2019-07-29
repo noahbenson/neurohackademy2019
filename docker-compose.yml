@@ -14,8 +14,4 @@ services:
          - SUBJECTS_DIR="/data/freesurfer_subjects"
          - NPYTHY_DATA_CACHE_ROOT="/data/cache"
       volumes:
-         - "$SUBJECTS_DIR:/data/freesurfer_subjects"
-         - "$HCP_SUBJECTS_DIR:/data/hcp/subjects"
-         - "$NPYTHY_DATA_CACHE_ROOT:/data/cache"
-         - "$NPYTHY_EXT_DIR:/data/ext"
          - "$PWD/work:/home/jovyan/work"
